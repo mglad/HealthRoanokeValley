@@ -1,0 +1,143 @@
+<div class="starter-template">
+
+	<div class="row">
+		<div class="col-lg-6 col-xs-12">
+			<div class="panel panel-default panel-files">
+				<div class="panel-heading  panel-icon-yellow"><i class="fa fa-cogs" aria-hidden="true"></i> Options</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="btn-group" role="group" aria-label="...">
+							  <button type="button" class="btn btn-default" ng-class="active == 'graph' ? 'active': ''" ng-click="active = 'graph'"><i class="fa fa-bar-chart" aria-hidden="true"></i></button>
+							  <button type="button" class="btn btn-default" ng-class="active == 'mining' ? 'active': ''" ng-click="active = 'mining'"><i class="fa fa-database" aria-hidden="true"></i></button>
+							</div>
+							<span class="graph-title" ng-show="active == 'graph'">Graph</span>
+							  <span class="graph-title" ng-show="active == 'mining'">K-means Clustering</span>
+						</div>
+					</div>
+					<div ng-show="active=='graph'">
+						<div class="row padding-top">
+							<div class="col-xs-9">
+								<label>X-Axis</label>
+								<ui-select ng-model="$parent.selected" theme="bootstrap" on-select="selectXAxis()">
+									<ui-select-match>
+										<span>{{selected.question}}</span>
+									</ui-select-match>
+									<ui-select-choices repeat="question in questions | filter:$select.search">
+										<span ng-bind="question.question"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="col-xs-3" style="padding-top:23px;">
+								<button class="btn btn-primary btn-block" ng-disabled="!selected" data-toggle="modal" data-target="#save">Save as Report Element</button>
+							</div>
+						</div>
+						<div class="row padding-top">
+							<div class="col-xs-12">
+								<label>Filters</label>
+								<ui-select multiple ng-model="$parent.selectedFilters" theme="bootstrap" on-select="selectFilter($item)" on-remove="updateGraph()">
+									<ui-select-match>
+										<span>{{$item.question.trunc(150)}}</span>
+									</ui-select-match>
+									<ui-select-choices repeat="question in questions | filter:$select.search">
+										<span ng-bind="question.question"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="row padding-top">
+							<div class="col-xs-12">
+								<div class="well" ng-show="selectedFilters.length">
+								<ul class="list-group"><li class="list-group-item" ng-repeat="filter in selectedFilters"><div class="input-group" style="width:100%">
+										<p class="filter-text">{{filter.question}}</p>
+										<select class="form-control pull-right form-inline" style="width: 40%;" ng-model="filter.selected" ng-change="updateGraph()" ng-options="x for x in filter.options">
+										</select>
+								</ui>
+								</div>
+								</div></li></ul>
+							</div>
+						</div>
+					</div>
+					<div ng-show="active=='mining'">
+						<div class="row padding-top">
+							<div class="col-xs-12">
+								<label>Please select 2 numeric columns to compare</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>X-Axis</label>
+									<ui-select ng-model="$parent.selectedMine1" theme="bootstrap">
+									<ui-select-match>
+										<span>{{selectedMine1.question}}</span>
+									</ui-select-match>
+									<ui-select-choices repeat="question in questions | filter:{question: $select.search, isNumeric: true}">
+										<span ng-bind="question.question"></span>
+									</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>Y-Axis</label>
+									<ui-select ng-model="$parent.selectedMine2" theme="bootstrap">
+									<ui-select-match>
+										<span>{{selectedMine2.question}}</span>
+									</ui-select-match>
+									<ui-select-choices repeat="question in questions | filter:{question: $select.search, isNumeric: true}">
+										<span ng-bind="question.question"></span>
+									</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>Number of Clusters (K)</label>
+									<input type="text" id="k" />
+								</div>
+							</div>
+						</div>
+						<div class="row padding-top">
+							<div class="col-xs-12">
+								<button class="btn btn-primary" ng-click="kMeans()">Analyze</button>
+								<button class="btn btn-primary pull-right" ng-disabled="!elementExists" data-toggle="modal" data-target="#save">Save as Report Element</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-xs-12" ng-show="active=='graph'">
+			<canvas id="graph" class="chart chart-bar" chart-data="data"
+			  chart-labels="labels" >
+			</canvas>
+		</div>
+		<div class="col-lg-6 col-xs-12" ng-show="active=='mining'">
+			<canvas id="scatter">
+			</canvas>
+		</div>
+	</div>
+
+	<div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Save Report Element</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+		      	<label>Description</label>
+		      	<input type="text" ng-model="saveText" class="form-control" />
+      		</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button class="btn btn-primary" data-dismiss="modal" ng-click="saveReportElement()">Save</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

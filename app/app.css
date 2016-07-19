@@ -1,0 +1,223 @@
+body {
+    height: inherit;
+}
+html {
+    height: 100%;
+}
+.border {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #aaa;
+}
+.view-row {
+    margin-top: 10px;
+}
+.starter-template {
+    padding: 49px 15px 15px 15px;
+}
+.button {
+    -webkit-app-region: no-drag;
+}
+.window-controls {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.tool {
+    padding: 20px 30px;
+    width: 120px;
+    color: #005466;
+    ;
+}
+.tool-left {
+    margin-left: 10px;
+}
+.tool>div {
+    padding-top: 10px;
+}
+.logo {
+    position: absolute;
+    top: 7px;
+    left: 3px;
+    -webkit-app-region: no-drag;
+}
+.logo:hover {
+    -webkit-transform: scale(1.22, 1.22);
+}
+.logo>img {
+    width: 20px;
+}
+.padding-top {
+    padding-top: 10px;
+}
+.panel-icon-primary {
+    border-left: 30px solid #00697F !important;
+    border-bottom: 3px solid #00697F !important;
+    padding: 5px 15px;
+}
+.panel-icon-green {
+    border-left: 30px solid #006600 !important;
+    border-bottom: 3px solid #006600 !important;
+    padding: 5px 15px;
+}
+.panel-icon-yellow {
+    border-left: 30px solid #b38f00 !important;
+    border-bottom: 3px solid #b38f00 !important;
+    padding: 5px 15px;
+}
+.panel-files {
+    border-top: 0;
+}
+.settings-btn {
+    margin-left: -10px;
+    background-color: #999999;
+    color: #fff !important;
+}
+.settings-btn:hover, .settings-btn:focus {
+    background-color: #8c8c8c;
+}
+.panel-default {
+    border-color: #F0F0F0;
+}
+.panel-heading>i {
+    position: absolute;
+    color: white;
+    left: 24px;
+    top: 9px;
+}
+.file-item>i {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+.file-item>.fa-check {
+    color: #336600;
+}
+.btn-danger {
+    background-color: #b30000;
+    border-color: #990000;
+}
+.btn-danger:hover {
+    background-color: #990000;
+}
+
+/*Title Bar*/
+
+header {
+    width: 100%;
+    height: 34px;
+    background-color: #005466;
+    /*border-bottom: 1px solid rgb(205,205,205);*/
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+    text-align: center;
+    padding-top: 5px;
+    color: #fff;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/*Window Controls*/
+
+header>ul {
+    float: right;
+    text-align: right;
+    line-height: 0;
+    padding-left: 6px;
+}
+header>ul>li, header>ul>li>a {
+    display: inline-block;
+    -webkit-filter: brightness(1.3);
+}
+header>ul {
+    float: right;
+}
+header>ul>li>a {
+    width: 22px;
+    height: 22px;
+    margin: 6px 6px 6px 0;
+    background-image: url('./thirdparty/icons.svg');
+    background-repeat: no-repeat;
+    -webkit-transition: -webkit-transform 200ms;
+    -webkit-app-region: no-drag;
+}
+header>ul>li>a:hover {
+    -webkit-transform: scale(1.22, 1.22);
+    outline: none;
+}
+a#windowControlClose {
+    background-position: -44px 0;
+}
+a#windowControlMaximize {
+    background-position: -22px 0;
+}
+a#windowControlMinimize {
+    background-position: 0 0;
+}
+.map {
+    height: 500px;
+}
+.ui-select-toggle {
+    word-wrap: break-word;
+    white-space: normal;
+    text-overflow: inherit;
+    height: 100%;
+    min-height: 34px;
+}
+.ui-select-bootstrap .ui-select-choices-row>a {
+    white-space: normal;
+}
+#numeric .slider-selection {
+    background: #00697F;
+}
+ul {
+    padding: 0;
+}
+a[href^="http://maps.google.com/maps"] {
+    display: none !important;
+}
+a[href^="https://maps.google.com/maps"] {
+    display: none !important;
+}
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display: none;
+}
+.gmnoprint div {
+    background: none !important;
+}
+.map-green {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    background-color: rgba(0, 255, 0, .2);
+}
+.map-red {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    background-color: rgba(255, 0, 0, .2);
+}
+.filter-text {
+    width: 60%;
+    display: inline-block;
+}
+.sort-list {
+    padding: 5px;
+    border-radius: 3px;
+}
+.sort-icon {
+    padding-top: 2px;
+}
+.btn-left {
+    margin-left: 10px;
+}
+.graph-title {
+    padding-left: 10px;
+    font-size: 1.5em;
+    vertical-align: middle;
+}

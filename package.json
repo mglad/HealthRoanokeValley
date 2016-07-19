@@ -1,0 +1,26 @@
+{
+  "name": "HRV",
+  "version": "0.0.1",
+  "description": "Healthy Roanoke Valley",
+  "main": "app/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "window": {
+    "title": "Healthy Roanoke Valley",
+    "toolbar": false,
+    "frame": false,
+    "width": 1024,
+    "height": 768,
+    "position": "center",
+    "show": true
+  },
+  "dependencies": {
+    "nedb": "^1.8.0",
+    "node-kmeans": "^1.1.0",
+    "node-xlsx": "^0.7.1",
+    "pdfkit": "^0.7.2"
+  }
+}

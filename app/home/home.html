@@ -1,0 +1,84 @@
+<div class="starter-template">
+<div class="row">
+  <div class="col-xs-9">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default panel-files">
+          <div class="panel-heading panel-icon-green"><i class="fa fa-file-excel-o"></i> Choose Current Survey</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-11">
+                <select class="form-control" ng-model="selectedSurvey">
+                  <option value="">No Survey Selected</option>
+                  <option ng-repeat="survey in surveys" value="{{survey._id}}">{{survey.title}}</option>
+                </select>
+              </div>
+              <div class="col-xs-1">
+                <button class="btn btn-danger settings-btn" ng-disabled="!selectedSurvey" ng-click="deleteSurvey()"><i class="fa fa-trash-o"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default panel-files">
+          <div class="panel-heading panel-icon-yellow"><i class="fa fa-line-chart"></i> Tools</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <button class="btn btn-default tool" ng-click="goToMap()" ng-disabled="!selectedSurvey"><i class="fa fa-map-o fa-3x"></i><div>MapView</div></button>
+
+                <button class="btn btn-default tool tool-left" ng-click="goToGraph()" ng-disabled="!selectedSurvey"><i class="fa fa-pie-chart fa-3x"></i><div>Graphs</div></button>
+                <button class="btn btn-default tool tool-left" ng-click="goToReport()" ng-disabled="!selectedSurvey"><i class="fa fa-file-text-o fa-3x"></i><div>Reports</div></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="panel panel-default panel-files">
+      <div class="panel-heading panel-icon-primary"><i class="fa fa-upload"></i> Import Survey</div>
+      <div class="panel-body">
+        <div class="row" ng-hide="imported">
+          <div class="col-xs-12">
+            <button class="btn btn-block btn-danger" ng-show="files" ng-click="resetForm()">Cancel</button>
+            <button ngf-select="uploadFiles($files)" ng-hide="files" multiple
+                accept="application/vnd.ms-excel" class="btn btn-primary btn-block">Select Files</button>
+          </div>
+        </div>
+        <div class="row padding-top" ng-show="files">
+          <div class="col-xs-12">
+            <ul class="list-group">
+              <li class="list-group-item file-item" ng-repeat="f in files" style="font:smaller">
+                  {{f.name}} <i class="fa fa-spinner fa-spin" ng-show="loading"></i><i class="fa fa-check" ng-hide="loading"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row" ng-show="!loading && files">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label>Survey Title</label>
+              <input type="text" class="form-control" ng-model="surveyTitle" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" ng-click="insertDB(surveyTitle)">Import</button>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-show="imported">
+          <div class="col-xs-12">
+            <div class="alert alert-success" role="alert">Survey data has been successfully imported</div>
+            <button class="btn btn-primary btn-block" ng-click="imported = false">Import Another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>

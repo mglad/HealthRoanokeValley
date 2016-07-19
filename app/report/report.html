@@ -1,0 +1,173 @@
+<div class="starter-template">
+	<div class="row">
+		<div class="col-xs-7">
+			<div class="panel panel-default panel-files">
+				<div class="panel-heading panel-icon-green"><i class="fa fa-file-text-o"></i> Create a Report</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<button class="btn btn-default" data-toggle="modal" data-target="#header">Add Header</button>
+							<button class="btn btn-default" data-toggle="modal" data-target="#text">Add Text</button>
+							<button class="btn btn-default" data-toggle="modal" data-target="#graph">Add Graph Element</button>
+							<button class="btn btn-primary" ng-click="previewSurvey()">Preview Report</button>
+						</div>
+					</div>
+					<div class="row padding-top">
+						<div class="col-xs-12">
+							<div class="well">
+								<ul data-as-sortable="dragControlListeners" data-ng-model="pdfElements">
+									<li class="sort-list" data-ng-repeat="item in pdfElements" data-as-sortable-item>
+										<div data-as-sortable-item-handle>
+											<span ng-show="item.type != 'picture'">{{item.value.trunc(40)}}</span>
+											<span ng-show="item.type == 'picture'">{{item.value.description.trunc(70)}}</span>
+											<i class="fa sort-icon pull-right" ng-class="item.type == 'header' ? 'fa-header': item.type == 'picture' ? 'fa-picture-o' : 'fa-file-text-o'" aria-hidden="true"></i>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-top">
+						<div class="col-xs-12">
+							<button class="btn btn-success pull-right btn-left" data-toggle="modal" data-target="#report">Save Report</button>
+							<button class="btn btn-danger pull-right" ng-click="pdfElements = []">Clear Report</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="panel panel-default panel-files">
+				<div class="panel-heading panel-icon-primary"><i class="fa fa-file-pdf-o"></i> View Reports</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Report</label>
+								<select class="form-control" ng-model="reportToView" ng-options="x.description for x in survey.reports"></select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<button class="btn btn-primary btn-block" ng-disabled="!reportToView" ng-click="viewReport()">View</button>
+						</div>
+						<div class="col-xs-4">
+							<button class="btn btn-warning btn-block" ng-disabled="!reportToView" data-toggle="modal" data-target="#export">Export</button>
+						</div>
+						<div class="col-xs-4">
+							<button class="btn btn-danger btn-block" ng-disabled="!reportToView" ng-click="deleteReport()">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="header" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add Header Element</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Header Text</label>
+						<input type="text" ng-model="saveHeader" class="form-control" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" data-dismiss="modal" ng-disabled="!saveHeader" ng-click="addHeader()">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="text" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add Text Element</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Text</label>
+						<textarea ng-model="saveText" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" data-dismiss="modal" ng-disabled="!saveText" ng-click="addText()">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Save Report</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Report Name</label>
+						<input type="text" ng-model="saveReport" class="form-control" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" data-dismiss="modal" ng-disabled="!saveReport" ng-click="processReport()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="graph" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add Graph Element</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Graph</label>
+					</div>
+					<div class="row">
+						<div class="col-xs-10">
+							<select class="form-control" ng-model="saveGraph" ng-options="x.description for x in survey.report_elements"></select>
+						</div>
+						<div class="col-xs-2">
+							<button class="btn btn-block btn-danger" ng-disabled="!saveGraph" ng-click="deleteElement()">Delete</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" data-dismiss="modal" ng-disabled="!saveGraph" ng-click="addGraph()">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="export" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Export Report</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Path</label>
+						<input id="filePath" type="file" ng-model="filePath" nwsaveas="report.pdf" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" data-dismiss="modal" ng-click="exportReport()">Export</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

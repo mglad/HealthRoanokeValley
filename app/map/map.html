@@ -1,0 +1,97 @@
+<div class="starter-template">
+	<div class="row" ng-hide="zipField">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-icon-green"><i class="fa fa-exclamation-triangle"></i> You haven't selected a zipcode value</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-10">
+							<ui-select ng-model="$parent.selected" theme="bootstrap">
+								<ui-select-match>
+									<span>{{selected.question}}</span>
+								</ui-select-match>
+								<ui-select-choices repeat="question in questions | filter:$select.search">
+									<span ng-bind="question.question"></span>
+								</ui-select-choices>
+							</ui-select>
+						</div>
+						<div class="col-xs-2">
+							<button class="btn btn-primary btn-block" ng-click="selectZip()">Select Field</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-8">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-icon-primary"><i class="fa fa-map-o"></i> Map</div>
+				<div class="panel-body">
+					<div id="map" class="map"></div>
+					<div class="row view-row">
+						<div class="col-xs-8">
+							<div class="map-green"></div> In Threshold
+							<div class="map-red"></div> Not in Threshold
+						</div>
+						<div class="col-xs-4">
+							<button class="btn btn-primary pull-right view-data-btn" ng-click="viewData()">View Data</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-icon-yellow"><i class="fa fa-cogs"></i> Options</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<label>Select Field</label>
+							<ui-select ng-model="$parent.selectedField" theme="bootstrap" on-select="getFilters(); selectedFilter=''">
+								<ui-select-match>
+									<span>{{selectedField.question}}</span>
+								</ui-select-match>
+								<ui-select-choices repeat="question in questions | filter:$select.search">
+									<span ng-bind="question.question"></span>
+								</ui-select-choices>
+							</ui-select>
+						</div>
+						<div class="form-group" ng-show="selectedField">
+							<label>Filter</label> &nbsp;
+							<label class="radio-inline">
+								<input type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="threshold" ng-change="setSlider()" value="percentage"> Value
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="threshold" ng-change="setSlider()" ng-disabled="!numeric" value="numeric"> Range
+							</label>
+						</div>
+						<div class="form-group">
+
+							<ui-select ng-show="threshold == 'percentage'" ng-model="$parent.selectedFilter" theme="bootstrap" on-select="">
+								<ui-select-match>
+									<span>{{selectedFilter}}</span>
+								</ui-select-match>
+								<ui-select-choices repeat="filter in filters | filter:$select.search">
+									<span ng-bind="filter"></span>
+								</ui-select-choices>
+							</ui-select>
+							<input type="text" id="numeric" ng-show="threshold == 'numeric'" />
+						</div>
+						<div ng-show="selectedField">
+							<label>Threshold</label>
+							<div class="form-group">
+								<input type="text" id="threshold" />
+							</div>
+						</div>
+						<div class="form-group" ng-show="selectedField">
+							<button ng-click="setMap()" class="btn btn-primary btn-block">Set Map</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

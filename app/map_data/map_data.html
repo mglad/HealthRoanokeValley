@@ -1,0 +1,19 @@
+<div class="starter-template">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Zip Code</th>
+                <th ng-hide="isRange">Count of {{value}}</th>
+                <th ng-show="isRange">Count range from {{value[0]}} to {{value[1]}}</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(zip, obj) in dataToView">
+                <td>{{zip}}</td>
+                <td>{{obj.match}}</td>
+                <td>{{obj.total}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
