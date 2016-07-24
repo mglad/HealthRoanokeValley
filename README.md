@@ -1,9 +1,5 @@
 # Healthy Roanoke Valley Analytics
 
-### Description
-
-Used
-
 ### Features
 
  * Import excel surveys into application
